@@ -234,7 +234,7 @@ class TransformerModel(tf.keras.layers.Layer):
                           tf.ones_like(input_ids), tf.zeros_like(input_ids))
 
     # Run the stacked transformer.
-    encoder_output = self.encoder(input_embs, input_mask, training=training)
+    encoder_output,_ = self.encoder(input_embs, input_mask, training=training)
 
     return encoder_output, input_mask
 
