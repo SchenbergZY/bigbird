@@ -443,15 +443,16 @@ class EncoderStack(tf.keras.layers.Layer):
 
     if self.params["norm_type"] == "postnorm":
       encoder_inputs = self.layer_norm(encoder_inputs)
-
+    pre_layer_outputs = []
     layer_output = encoder_inputs
     for layer in self.encoder_layers:
       layer_output = layer(
           layer_output, attention_mask, band_mask,
           encoder_from_mask, encoder_to_mask, blocked_encoder_mask,
           training=training)
+      pre_layer_outputs.append(layer_output) #last layer not use because norm problem
 
     if self.params["norm_type"] == "prenorm":
       layer_output = self.layer_norm(layer_output)
 
-    return layer_output
+    return layer_output,pre_layer_outputs
