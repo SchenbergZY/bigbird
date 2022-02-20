@@ -86,13 +86,13 @@ class BertModel(tf.keras.layers.Layer):
           max_position_embeddings=self.params["max_position_embeddings"],
           dropout_prob=self.params["hidden_dropout_prob"])
       self.encoder = encoder.EncoderStack(self.params)
-      self.pooler = utils.SimpleDenseLayer(
-          input_size=self.params["hidden_size"],
-          output_size=self.params["hidden_size"],
-          initializer=utils.create_initializer(
-              self.params["initializer_range"]),
-          activation=tf.tanh,
-          name="pooler/dense")
+      #self.pooler = utils.SimpleDenseLayer(
+      #    input_size=self.params["hidden_size"],
+      #    output_size=self.params["hidden_size"],
+      #    initializer=utils.create_initializer(
+      #        self.params["initializer_range"]),
+      #    activation=tf.tanh,
+      #    name="pooler/dense")
 
   def call(self,
            input_ids,
@@ -139,12 +139,12 @@ class BertModel(tf.keras.layers.Layer):
     # [batch_size, hidden_size]. This is necessary for segment-level
     # (or segment-pair-level) classification tasks where we need a fixed
     # dimensional representation of the segment.
-    first_token_tensor = sequence_output[:, 0, :]
+    #first_token_tensor = sequence_output[:, 0, :]
     # We "pool" the model by simply taking the hidden state corresponding
     # to the first token. We assume that this has been pre-trained
-    pooled_output = self.pooler(first_token_tensor)
+    #pooled_output = self.pooler(first_token_tensor)
 
-    return sequence_output, pooled_output,pre_layer_outputs
+    return sequence_output, 0,pre_layer_outputs
 
 
 class TransformerModel(tf.keras.layers.Layer):
